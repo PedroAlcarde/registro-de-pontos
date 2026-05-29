@@ -1,21 +1,36 @@
 <?php
 
-define('TITLE', 'Cadastrar funcionário');
-define('CONFIRM','Cadastrar');
+
 
 use App\Entity\Funcionario;
+
 require_once __DIR__.'/app/entity/Funcionario.php';
 
-    $obFuncionario = new Funcionario;
+
+define('TITLE','Editar funcionário');
+define('CONFIRM','Editar');
+
+if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
+    header('location: index.php?status=error');
+    exit;
+}
+
+$obFuncionario = Funcionario::getFuncionario($_GET['id']);
+
+if(!$obFuncionario instanceof Funcionario){
+    header('location: index.php?status=error');
+    exit;
+}
 
 if(isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'], $_POST['status'])){
 
-
+    $obFuncionario = new Funcionario;
+    $obFuncionario->id = $_REQUEST['id'];
     $obFuncionario->nome = $_POST['nome'];
     $obFuncionario->matricula = $_POST['matricula'];
     $obFuncionario->tipo_usuario = $_POST['tipo_usuario'];
     $obFuncionario->status = $_POST['status'];
-    $obFuncionario->cadastrar();
+    $obFuncionario->atualizar();
 
     header('location: index.php?status=success');
     exit;
