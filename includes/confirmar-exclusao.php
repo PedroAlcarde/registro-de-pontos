@@ -15,9 +15,9 @@
         
         <div class="form-group">
             <a href="index.php">
-                <button type="button">Cancelar</button>
+                <button type="button"  class="btn btn-primary btn-lg">Cancelar</button>
             </a>
-            <button type="submit" name="excluir">Excluir</button>
+            <button type="submit" name="excluir" class="btn btn-danger btn-lg">Excluir</button>
         </div>
 
     </form>

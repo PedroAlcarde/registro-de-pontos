@@ -31,19 +31,19 @@
                                                         <td colspan="6" class="text-center">Nenhuma vaga encontrada</td>';
 ?>
 
-<main>
+<main class="mt-">
 
     <?= $mensagem ?>
 
-    <section>
+    <section class="d-flex justify-content-center">
         <a href="cadastrar.php">
-            <button>Cadastrar funcionário</button>
+            <button class="btn btn-primary btn-lg">Cadastrar funcionário</button>
         </a>
     </section>
 
-    <section>
+    <section class="rounded-3">
 
-        <table class="table">
+        <table class="table table-hover table-sm my-5 rounded-3">
 
             <thead>
                 <tr>
