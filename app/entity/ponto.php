@@ -1,0 +1,41 @@
+<?php 
+
+namespace App\Entity;
+
+use App\db\Database;
+use \PDO;
+require_once __DIR__.'/db/Database.php';
+
+class Funcionario{
+
+public $id;
+public $nome;
+public $matricula;
+public $tipo_usuario;
+public $status;
+
+public function registrar(){
+//inserir no banco de dados
+$obDatabase = new Database('registro');
+$this->id = $obDatabase->insert([
+            'nome' => $this->nome,
+            'matricula' => $this->matricula,
+            'tipo_usuario' => $this->tipo_usuario,
+            'status' => $this->status,
+                     ]);
+                     
+return true;
+}
+
+
+public static function getFuncionarios($where = null, $order = null, $limit = null){
+return (new Database('usuario'))->select($where,$order,$limit)
+                                ->fetchAll(PDO::FETCH_CLASS,self::class);
+}
+
+public static function getFuncionario($id){
+    return (new Database('usuario'))->select('id = '.$id)
+                                    ->fetchObject(self::class); 
+}
+
+}

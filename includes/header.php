@@ -8,9 +8,32 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="bg-light">
-    <div class="bg-info bg-gradient d-flex justify-content-center mb-5 py-2">
-      <h1>Cadastro de funcionários</h1>
-    </div>
+
+    <nav class="navbar navbar-expand-lg bg-primary bg-gradient mb-5 py-4">
+      <div class="container-fluid">
+        <a class="fs-2 text-light navbar-brand" href="#">Registro de Ponto</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class=" fs-6 navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="text-light nav-link active" aria-current="page" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="text-light nav-link" href="#">Relatórios</a>
+            </li>
+            <li class="nav-item">
+              <a class="text-light nav-link" href="index.php">Usuários</a>
+            </li>
+          </ul>
+          <span class="text-light navbar-text">
+            Menu
+          </span>
+        </div>
+      </div>
+</nav>
+
     <div class="container">
       
 

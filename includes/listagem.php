@@ -35,7 +35,7 @@
 
     <?= $mensagem ?>
 
-    <section class="d-flex justify-content-center">
+    <section>
         <a href="cadastrar.php">
             <button class="btn btn-primary btn-lg">Cadastrar funcionário</button>
         </a>
