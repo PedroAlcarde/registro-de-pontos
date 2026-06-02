@@ -82,4 +82,8 @@ public function delete($where){
 
     return true;
 }
+
+// public function select_ponto(){
+//     $query = 'SELECT '.$this
+// }
 }

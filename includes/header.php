@@ -11,7 +11,7 @@
 
     <nav class="navbar navbar-expand-lg bg-primary bg-gradient mb-5 py-4">
       <div class="container-fluid">
-        <a class="fs-2 text-light navbar-brand" href="#">Registro de Ponto</a>
+        <a class="fs-2 text-light navbar-brand" href="dashboard.php">Registro de Ponto</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,7 +28,7 @@
             </li>
           </ul>
           <span class="text-light navbar-text">
-            Menu
+            Sair
           </span>
         </div>
       </div>

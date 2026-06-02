@@ -43,7 +43,7 @@
 
     <section class="rounded-3">
 
-        <table class="table table-hover table-sm my-5 rounded-3">
+        <table class="table table-hover my-5 rounded-3">
 
             <thead>
                 <tr>

@@ -29,14 +29,14 @@ return true;
 }
 
 
-// public static function getPontos($where = null, $order = null, $limit = null){
-// return (new Database('registro'))->select($where,$order,$limit)
-//                                 ->fetchAll(PDO::FETCH_CLASS,self::class);
-// }
+public static function getPontos($where = null, $order = null, $limit = null){
+return (new Database('registro'))->select($where,$order,$limit)
+                                ->fetchAll(PDO::FETCH_CLASS,self::class);
+}
 
-// public static function getPontos($id_usuario){
-//     return (new Database('registro'))->select('id_usuario = '.$id_usuario)
-//                                     ->fetchObject(self::class); 
-// }
+public static function getPonto($id_usuario){
+    return (new Database('registro'))->select('id_usuario = '.$id_usuario)
+                                    ->fetchObject(self::class); 
+}
 
 }

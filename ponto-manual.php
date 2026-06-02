@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', 'Registrar ponto manualmente');
+define('TITLE', 'Registrar pontos manualmente');
 
 use App\Entity\ponto;
 require_once __DIR__.'/app/entity/ponto.php';
@@ -19,7 +19,7 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
     $obPonto->longitude = $_POST['longitude'];
     $obPonto->registrar();
 
-    header('location: index.php?status=success');
+    header('location: dashboard.php?status=success');
     exit;
 
 }

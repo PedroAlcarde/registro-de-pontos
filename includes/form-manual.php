@@ -1,7 +1,7 @@
 <main>
 
     <section>
-        <a href="index.php">
+        <a href="dashboard.php">
             <button class="btn btn-danger btn-lg my-2">Voltar</button>
         </a>
     </section>
