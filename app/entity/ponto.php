@@ -6,36 +6,37 @@ use App\db\Database;
 use \PDO;
 require_once __DIR__.'/db/Database.php';
 
-class Funcionario{
+class Ponto{
 
-public $id;
-public $nome;
-public $matricula;
-public $tipo_usuario;
-public $status;
+public $id_usuario;
+public $data_ponto;
+public $tipo_ponto;
+public $latitude;
+public $longitude;
 
 public function registrar(){
 //inserir no banco de dados
 $obDatabase = new Database('registro');
-$this->id = $obDatabase->insert([
-            'nome' => $this->nome,
-            'matricula' => $this->matricula,
-            'tipo_usuario' => $this->tipo_usuario,
-            'status' => $this->status,
+$this->id_usuario = $obDatabase->insert([
+            'id_usuario' => $this->id_usuario,
+            'data_ponto' => $this->data_ponto,
+            'tipo_ponto' => $this->tipo_ponto,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
                      ]);
                      
 return true;
 }
 
 
-public static function getFuncionarios($where = null, $order = null, $limit = null){
-return (new Database('usuario'))->select($where,$order,$limit)
-                                ->fetchAll(PDO::FETCH_CLASS,self::class);
-}
+// public static function getPontos($where = null, $order = null, $limit = null){
+// return (new Database('registro'))->select($where,$order,$limit)
+//                                 ->fetchAll(PDO::FETCH_CLASS,self::class);
+// }
 
-public static function getFuncionario($id){
-    return (new Database('usuario'))->select('id = '.$id)
-                                    ->fetchObject(self::class); 
-}
+// public static function getPontos($id_usuario){
+//     return (new Database('registro'))->select('id_usuario = '.$id_usuario)
+//                                     ->fetchObject(self::class); 
+// }
 
 }
