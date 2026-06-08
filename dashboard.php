@@ -3,6 +3,9 @@
 use App\Entity\ponto;
 require_once __DIR__.'/app/entity/ponto.php';
 
+use App\Entity\db\Database;
+require_once __DIR__.'/app/Entity/db/Database.php';
+
 use App\Entity\Funcionario;
 require_once __DIR__.'/app/entity/Funcionario.php';
 

@@ -83,7 +83,11 @@ public function delete($where){
     return true;
 }
 
-// public function select_ponto(){
-//     $query = 'SELECT '.$this
-// }
+public function select_nome($where = null, $order = null, $limit = null, $name = 'usuario.nome'){
+    $where = strlen($where) ? 'WHERE '.$where : '';
+    $order = strlen($order) ? 'ORDER BY '.$order : '';
+    $limit = strlen($limit) ? 'LIMIT '.$limit : '';
+
+    $query = 'SELECT '.$name.' FROM usuario JOIN registro ON usuario.id = registro.id_usuario';
+}
 }

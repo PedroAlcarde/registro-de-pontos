@@ -1,4 +1,7 @@
-
+<?php 
+// If 'app' is inside the same 'includes' folder as this file:
+// require_once __DIR__.'\..\app\entity\Funcionario.php';
+?>
 
 <main>
 
@@ -10,7 +13,7 @@
 
     <h2 class="mb-2"><?= TITLE ?></h2>
 
-    <form method="post">
+    <form  method="post">
 
         <!-- <div>
             <input type="hidden" name="id" value="<?php echo $_GET['id']?>">
@@ -48,7 +51,7 @@
             
             <div class="form-group">
                 <label>Latitude</label>
-                <input type="number" name="latitude" id="latitude" step="any" value="<?= $obPonto->latitude ?>">
+                <input type="number" name="latitude" class="form-control" id="latitude" step="any" value="<?= $obPonto->latitude ?>">
             </div>
 
 
@@ -56,19 +59,15 @@
             
             <div class="form-group">
                 <label>Longitude</label>
-                <input type="number" name="longitude" id="longitude" step="any" value="<?= $obPonto->longitude ?>">
+                <input type="number" name="longitude" class="form-control" id="longitude" step="any" value="<?= $obPonto->longitude ?>">
             </div>
 
 
         <div class="form-group">
             <label>Funcionário</label>
-            <select name="id" id="id">
+            <select name="id_usuario" id="id_usuario" class="form-control">
                 <option value="" disabled selected>Selecione um funcionário</option>
                 <?php 
-                    
-require_once __DIR__.'/../app/entity/Funcionario.php';
-
-$funcionarios = Funcionario::getFuncionarios();
 
                     foreach($funcionarios as $funcionario){
                         $funcionario->id;
@@ -91,21 +90,3 @@ $funcionarios = Funcionario::getFuncionarios();
 
 </main>
 
-<script>
-        function obterCoordenadas() {
-            if (navigator.geolocation) {
-                // Pede permissão e captura a posição
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;
-                }, function(error) {
-                    console.error("Erro ao obter localização: " + error.message);
-                });
-            } else {
-                alert("Geolocalização não é suportada por este navegador.");
-            }
-        }
-
-        // Executa a função assim que a página carrega
-        window.onload = obterCoordenadas;
-    </script>

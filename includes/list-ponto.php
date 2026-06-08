@@ -14,11 +14,18 @@
         }
     }
 
+    $lista_nomes = [];
+    foreach ($funcionarios as $usuario) {
+    $lista_nomes[$usuario->id] = $usuario->nome;
+}
 
     $result_ponto = '';
     foreach($pontos as $ponto){
+
+ $nome_usuario = $lista_nomes[$ponto->id_usuario] ?? 'Usuário ' . $ponto->id_usuario;
+
         $result_ponto .= '<tr>
-                            <td>'.$ponto->id_usuario.'</td>
+                            <td>'.$nome_usuario.'</td>
                             <td>'.date('d/m/Y H:i:s', strtotime($ponto->data_ponto)).'</td>
                             <td>'.$ponto->tipo_ponto.'</td>
                             <td>'.$ponto->latitude.'</td>
@@ -40,7 +47,7 @@
 
             <thead>
                 <tr>
-                    <th>ID do funcionário</th>
+                    <th>Funcionário</th>
                     <th>Data do registro</th>
                     <th>Tipo do registro</th>
                     <th>Latitude</th>
