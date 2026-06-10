@@ -14,7 +14,7 @@
 
         
         <div class="form-group">
-            <a href="index.php">
+            <a href="crud.php">
                 <button type="button"  class="btn btn-primary btn-lg">Cancelar</button>
             </a>
             <button type="submit" name="excluir" class="btn btn-danger btn-lg">Excluir</button>

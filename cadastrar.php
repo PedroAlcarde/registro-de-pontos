@@ -17,7 +17,7 @@ if(isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'], $_POST['st
     $obFuncionario->status = $_POST['status'];
     $obFuncionario->cadastrar();
 
-    header('location: index.php?status=success');
+    header('location: crud.php?status=success');
     exit;
 
 }

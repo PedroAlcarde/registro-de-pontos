@@ -1,12 +1,73 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Login</title>
+    <style>
 
-use App\Entity\Funcionario;
-require_once __DIR__.'/app/entity/Funcionario.php';
+        .login{
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
 
-$funcionarios = Funcionario::getFuncionarios();
+        .logo-index{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
 
+        }
 
-
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/listagem.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+        .logo-index > img{
+            align-self: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div  class="logo-index">
+        <img src="images/intime.png" alt="intime">
+    </div>
+    <div class="login">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="login.php" method="POST">
+                                <div>
+                                    <div class="mb-3">
+                                        <label>Matrícula</label>
+                                        <input type="text" name="matricula" class="form-control">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <label>Senha</label>
+                                        <input type="password" name="senha" class="form-control">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -5,30 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <style>
+      .corheader{
+        background-color: #3bb7c7ff;
+      }
+
+      .logo-navbar{
+        width: 150px;
+      }
+
+      .fonte-navbar{
+        font-size: 25px;
+      }
+
+      .menu{
+        transition: 0.2s;
+      }
+
+      .menu:hover{
+        background-color: #339fadff;
+        transition: 0.2s;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg bg-primary bg-gradient mb-5 py-4">
+    <nav class="navbar navbar-expand-lg corheader bg-gradient mb-5 py-4">
       <div class="container-fluid">
-        <a class="fs-2 text-light navbar-brand" href="dashboard.php">Registro de Ponto</a>
+        <a class="fs-2 text-light navbar-brand" href="dashboard.php"><img src="images/intime-sem-leg.png" alt="intime" class="logo-navbar"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class=" fs-6 navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="text-light nav-link active" aria-current="page" href="dashboard.php">Dashboard</a>
+            <li class="nav-item menu">
+              <a class="text-light nav-link active fonte-navbar" aria-current="page" href="dashboard.php">Dashboard</a>
             </li>
-            <li class="nav-item">
-              <a class="text-light nav-link" href="#">Relatórios</a>
+            <li class="nav-item menu">
+              <a class="text-light nav-link fonte-navbar" href="#">Relatórios</a>
             </li>
-            <li class="nav-item">
-              <a class="text-light nav-link" href="index.php">Usuários</a>
+            <li class="nav-item menu">
+              <a class="text-light nav-link fonte-navbar" href="crud.php">Usuários</a>
             </li>
           </ul>
           <span class="text-light navbar-text">
-            Sair
+            <a href="logout.php" class="btn btn-danger text-white">Sair</a>
           </span>
         </div>
       </div>

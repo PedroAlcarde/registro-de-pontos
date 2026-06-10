@@ -11,14 +11,14 @@ define('TITLE','Editar funcionário');
 define('CONFIRM','Editar');
 
 if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
-    header('location: index.php?status=error');
+    header('location: crud.php?status=error');
     exit;
 }
 
 $obFuncionario = Funcionario::getFuncionario($_GET['id']);
 
 if(!$obFuncionario instanceof Funcionario){
-    header('location: index.php?status=error');
+    header('location: crud.php?status=error');
     exit;
 }
 
@@ -32,7 +32,7 @@ if(isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'], $_POST['st
     $obFuncionario->status = $_POST['status'];
     $obFuncionario->atualizar();
 
-    header('location: index.php?status=success');
+    header('location: crud.php?status=success');
     exit;
 
 }
