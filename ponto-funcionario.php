@@ -1,13 +1,12 @@
 <?php 
 session_start();
-print_r($_SESSION);
-exit;
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
     session_destroy();
     header('Location: login.php');
     exit;
-
+}
 ?>
 
 <!DOCTYPE html>
