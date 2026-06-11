@@ -16,18 +16,19 @@
 
         .logo-index{
             display: flex;
-            align-items: center;
             justify-content: center;
-            align-self: center;
-
+            height: 25vh;
         }
 
         .logo-index > img{
-            align-self: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 400px;
            
+        }
+
+        .entrar{
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
         }
     </style>
 </head>
@@ -58,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 entrar">
                                         <button type="submit" class="btn btn-primary">Enviar</button>
                                     </div>
                                 </div>

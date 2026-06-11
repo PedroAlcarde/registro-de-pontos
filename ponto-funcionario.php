@@ -1,16 +1,47 @@
 <?php 
 session_start();
+require_once __DIR__.'/app/entity/db/config.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
-    session_destroy();
-    header('Location: login.php');
-    exit;
+        $id_usuario = $_SESSION["id"];
+        $data_ponto = date('Y-m-d H:i:s');
+
+        $select = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' ORDER BY id DESC LIMIT 1";
+
+        $res = $conn->query($select) or die($conn->error);
+
+        $row = $res->fetch_object();
+
+        $qtd = $res->num_rows;
+
+
+
+        if($qtd>0){
+            if($row->tipo_ponto === 'entrada'){
+                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'saida')";
+                $conn->query($sql);
+            }elseif($row->tipo_ponto === 'saida'){
+                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
+                $conn->query($sql);
+            }
+        }else{
+            $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
+            $conn->query($sql);
+        }
+
+
+
+        session_destroy();
+        header('Location: login.php');
+        exit;
+
+
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,24 +60,42 @@ session_start();
             justify-content: center;
             align-items: center;
             align-self: center;
-            height: 40vh;
+            height: 80vh;
+        }
+
+        .funcionario > h1{
+            font-size: 65px;
+            text-align: center;
         }
 
         .button-ponto{
-            background-color: #ffffffff;
+            background-color: #ecececff;
             width: 250px;
             height: 70px;
             font-size: 25px;
             border-radius: 20px;
             margin-top: 50px;
+            margin-bottom: 50px;
         }
 
         .button-ponto:hover{
             background-color: #adadadff;
         }
+
+        .sair-funcionario{
+            margin: 10px;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: end;
+        }
     </style>
 </head>
 <body>
+    <div>
+        <span class="text-light navbar-text sair-funcionario">
+            <a href="logout.php" class="btn btn-danger text-white ">Sair</a>
+          </span>
+    </div>
     <div class="container funcionario">
         <?php 
         
@@ -58,6 +107,20 @@ session_start();
         <form method="post">
             <input type="submit" class="button-ponto btn" name="bater_ponto" value="Registrar ponto">
         </form>
+
+        <table class="table table-hover my-5 rounded-3">
+            <h2>Histórico de registros</h2>
+            <thead>
+                <tr>
+                    <th>Data e hora</th>
+                    <th>Tipo de registro</th>
+                </tr>
+            </thead>
+            <tbody>
+               <?php echo "teste";?>
+            </tbody>
+
+        </table>
     </div>
 </body>
 </html>

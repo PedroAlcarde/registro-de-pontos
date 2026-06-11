@@ -43,7 +43,7 @@
               <a class="text-light nav-link active fonte-navbar" aria-current="page" href="dashboard.php">Dashboard</a>
             </li>
             <li class="nav-item menu">
-              <a class="text-light nav-link fonte-navbar" href="#">Relatórios</a>
+              <a class="text-light nav-link fonte-navbar" href="relatorio.php">Relatórios</a>
             </li>
             <li class="nav-item menu">
               <a class="text-light nav-link fonte-navbar" href="crud.php">Usuários</a>

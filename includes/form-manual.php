@@ -1,7 +1,4 @@
-<?php 
-// If 'app' is inside the same 'includes' folder as this file:
-// require_once __DIR__.'\..\app\entity\Funcionario.php';
-?>
+
 
 <main>
 
