@@ -13,17 +13,43 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])){
 
     $sql_regs = $conn->query("SELECT * FROM registro WHERE id_usuario = ".$id);
 
-    $html = "<h1>Relatório do Funcionário</h1>";
-    $html .= "<p>Nome: {$funcionario['nome']}</p>";
+
+    $html = "
+            <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table{
+                
+                width:100%;
+                border-collapse:collapse;
+            }
+            th, td{
+                border:1px solid #000;
+                padding:5px;
+            }
+            
+            .logo-navbar{
+                width: 150px;
+            }
+
+            .top-pdf{
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+            </style>
+            ";
+    $html .= "<div class='top-pdf'><h1>Relatório do Funcionário</h1><img src='images/intime-sem-leg.png' alt='' class='logo-navbar'></div>";
+    $html .= "<h3>Nome: {$funcionario['nome']}</h3>";
     $html .= "<h3>Registros:</h3>";
     $html .= "<table>";
-    $html .= "<tr><th>Data</th><th>Descrição</th><th>Valor</th></tr>";
+    $html .= "<tr><th>Data</th><th>Tipo</th></tr>";
 
     while ($reg = $sql_regs->fetch_assoc()){
         $html .= "<tr>";
-        $html .= "<td>{$reg['data']}</td>";
-        $html .= "<td>{$reg['descricao']}</td>";
-        $html .= "<td>{$reg['valor']}</td>";
+        $html .= "<td>{$reg['data_ponto']}</td>";
+        $html .= "<td>{$reg['tipo_ponto']}</td>";
         $html .= "</tr>";
     }
     $html .= "</table>";
@@ -31,8 +57,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])){
     $conn->close();
 
     $dompdf = new Dompdf();
+    
 
-$dompdf->loadHtml("Olá mundo!");
+$dompdf->loadHtml($html);
 
 $dompdf->render();
 
