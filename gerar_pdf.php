@@ -1,9 +1,21 @@
 <?php 
 
+
+
+
+date_default_timezone_set('America/Sao_Paulo');
+
 require_once 'dompdf/autoload.inc.php';
 require_once __DIR__.'/app/entity/db/config.php';
 
 use Dompdf\Dompdf;
+
+$path = realpath(__DIR__ . '/images/intime-sem-leg.png');
+
+$imageData = base64_encode(file_get_contents($path));
+
+
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])){
     $id = intval($_POST['id_usuario']);
@@ -26,30 +38,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])){
                 border-collapse:collapse;
             }
             th, td{
+                border:none;
+            }
+
+             .borda-pdf{
                 border:1px solid #000;
                 padding:5px;
-            }
+             }
             
             .logo-navbar{
                 width: 150px;
             }
 
-            .top-pdf{
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: space-between;
+            .top-pdf > th{
+                border:none;
+            }
+
+            .meio{
+                border:1px solid black;
+                width: 25%;
+                height: 100px;
+                background-color: blue;
+            }
             </style>
             ";
-    $html .= "<div class='top-pdf'><h1>Relatório do Funcionário</h1><img src='images/intime-sem-leg.png' alt='' class='logo-navbar'></div>";
+    $html .= "
+<table class='top-pdf' width='100%' style='border:none; border-collapse:collapse;'>
+    <tr>
+        <td style='text-align:left; font-size:18px; font-weight:bold;'>
+            Relatório do Funcionário
+        </td>
+
+        <td style='text-align:right;'>
+            <img src='data:image/png;base64,$imageData' width='150'>
+        </td>
+    </tr>
+</table>
+";
+    
     $html .= "<h3>Nome: {$funcionario['nome']}</h3>";
     $html .= "<h3>Registros:</h3>";
     $html .= "<table>";
-    $html .= "<tr><th>Data</th><th>Tipo</th></tr>";
+    $html .= "<tr><th class='borda-pdf'>Data</th><th class='borda-pdf'>Tipo</th></tr>";
 
     while ($reg = $sql_regs->fetch_assoc()){
         $html .= "<tr>";
-        $html .= "<td>{$reg['data_ponto']}</td>";
-        $html .= "<td>{$reg['tipo_ponto']}</td>";
+        $html .= "<td class='borda-pdf'>{$reg['data_ponto']}</td>";
+        $html .= "<td class='borda-pdf'>{$reg['tipo_ponto']}</td>";
         $html .= "</tr>";
     }
     $html .= "</table>";

@@ -1,6 +1,6 @@
 <?php 
 
-
+    date_default_timezone_set('America/Sao_Paulo');
 
     $mensagem = '';
     if(isset($_GET['status'])){
@@ -27,7 +27,7 @@
         $result_ponto .= '<tr>
                             <td>'.$nome_usuario.'</td>
                             <td>'.date('d/m/Y H:i:s', strtotime($ponto->data_ponto)).'</td>
-                            <td>'.$ponto->tipo_ponto.'</td>
+                            <td>'.($ponto->tipo_ponto == 'entrada' ? 'Entrada' : 'Saída').'</td>
                             <td>'.$ponto->latitude.'</td>
                             <td>'.$ponto->longitude.'</td>
                             </tr>';

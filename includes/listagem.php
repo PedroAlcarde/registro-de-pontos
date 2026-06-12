@@ -14,12 +14,12 @@
 
     $resultados = '';
     foreach($funcionarios as $funcionario){
-        $resultados .= '<tr>
+        $resultados .= '<tr style="text-align: center;">
                             <td>'.$funcionario->id.'</td>
                             <td>'.$funcionario->nome.'</td>
                             <td>'.$funcionario->matricula.'</td>
-                            <td>'.$funcionario->tipo_usuario.'</td>
-                            <td>'.($funcionario->status == 's' ? 'Ativo' : 'Inativo').'</td>
+                            <td>'.($funcionario->tipo_usuario == 'admin' ? 'Administrador' : 'Funcionário').'</td>
+                            <td>'.($funcionario->status == 's' ? '<p style="background-color: #88E788; color: #3b663bff; border-radius: 20px;"><strong>Ativo</strong><p>' : '<p style="background-color: #ff7e7eff; color: #8f0202ff; border-radius: 20px;"><strong>Inativo</strong></p>').'</td>
                             <td>
                                 <a href="editar.php?id='.$funcionario->id.'"><button type="button" class="btn btn-primary">Editar</button></a>
                                 <a href="excluir.php?id='.$funcionario->id.'"><button type="button" class="btn btn-danger">Excluir</button></a>
@@ -46,7 +46,7 @@
         <table class="table table-hover my-5 rounded-3">
 
             <thead>
-                <tr>
+                <tr style="text-align: center;">
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Matrícula</th>
