@@ -28,7 +28,7 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
     <form action="gerar_pdf.php" method="POST">
 
     <div class="form-group">
-            <label>Funcionário</label>
+            <label for="id_usuario">Funcionário</label>
             <select name="id_usuario" id="id_usuario" class="form-control">
                 <option value="" disabled selected>Selecione um funcionário</option>
                 <?php 
@@ -45,8 +45,9 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
     <button type="submit" class="btn btn-primary mt-3">
         Gerar PDF
     </button>
-
 </form>
+
+
 <?php 
 include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
 ?>

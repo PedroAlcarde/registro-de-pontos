@@ -4,6 +4,30 @@ date_default_timezone_set('America/Sao_Paulo');
 session_start();
 require_once __DIR__.'/app/entity/db/config.php';
 
+    $id_registro = $_SESSION["id"];
+
+    $sqlHistorico = "SELECT data_ponto, tipo_ponto FROM registro WHERE id_usuario = '{$id_registro}'";
+
+    $res = $conn->query($sqlHistorico);
+
+    $registros = [];
+
+    $result_hist = '';
+
+    while($row = $res->fetch_object())
+        $registros[] = $row;
+
+    foreach($registros as $registro_funcionario){
+        $result_hist .= '<tr style="text-align: center;">
+                            <td>'.date('d/m/Y H:i:s', strtotime($registro_funcionario->data_ponto)).'</td>
+                            <td>'.($registro_funcionario->tipo_ponto == 'entrada' ? 'Entrada' : 'Saída').'</td>
+                         </tr>';
+    }
+
+    $result_hist = strlen($result_hist) ? $result_hist : '<tr>
+                                                        <td colspan="6" class="text-center">Nenhum registro encontrado</td>';
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
         $id_usuario = $_SESSION["id"];
@@ -55,6 +79,10 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         }
 
+        th{
+            text-align: center;
+        }
+
         .funcionario{
             display: flex;
             flex-flow: column nowrap;
@@ -62,7 +90,7 @@ require_once __DIR__.'/app/entity/db/config.php';
             justify-content: center;
             align-items: center;
             align-self: center;
-            height: 80vh;
+
         }
 
         .funcionario > h1{
@@ -119,7 +147,7 @@ require_once __DIR__.'/app/entity/db/config.php';
                 </tr>
             </thead>
             <tbody>
-               <?php echo "teste";?>
+               <?= $result_hist?>
             </tbody>
 
         </table>
