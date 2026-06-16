@@ -29,7 +29,7 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
 
     <div class="form-group">
             <label for="id_usuario">Funcionário</label>
-            <select name="id_usuario" id="id_usuario" class="form-control">
+            <select name="id_usuario" id="id_usuario" class="form-control" required>
                 <option value="" disabled selected>Selecione um funcionário</option>
                 <?php 
 
@@ -42,7 +42,11 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
             </select>
         </div>
 
-    <button type="submit" class="btn btn-primary mt-3">
+    <button type="submit" name="acao" value="relatorio" class="btn btn-primary mt-3">
+        Gerar relatório
+    </button>
+
+    <button type="submit" name="acao" formtarget="_blank" value="pdf" class="btn btn-primary mt-3">
         Gerar PDF
     </button>
 </form>
