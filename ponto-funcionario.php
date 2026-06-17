@@ -135,8 +135,12 @@ require_once __DIR__.'/app/entity/db/config.php';
         
         ?>
         <form method="post">
-            <input type="submit" class="button-ponto btn" name="bater_ponto" value="Registrar ponto">
+            <input type="submit" style="background-color: orange; color:black;" class="button-ponto btn" name="bater_ponto" value="Registrar ponto">
         </form>
+
+        <div>
+            <h5 style="text-align: center; margin-top: 20px; margin-bottom: 20px; color: white; padding: 10px; border-radius: 50%; width: 250px; height: 250px; align-items: center; justify-content: center; display: flex; font-size: 23px; border: white 2px solid;" class="js-data">Quarta, 17 de junho de 2026 <br>14:06:00</h5>
+        </div>
 
         <table class="table table-hover my-5 rounded-3">
             <h2>Histórico de registros</h2>
@@ -152,5 +156,27 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         </table>
     </div>
+
+    <script>
+        function setarData(){
+            let elementoData = document.querySelector(".js-data");
+
+            let data = new Date();
+
+            const objData = {
+                year: 'numeric',
+                month: 'long',
+                weekday: 'long',
+                day: 'numeric',
+        };
+
+        elementoData.textContent = data.toLocaleTimeString("pt-BR", objData);
+        }
+
+        setarData();
+        setInterval(() => {
+            setarData();    
+        }, 1000);
+    </script>
 </body>
 </html>
