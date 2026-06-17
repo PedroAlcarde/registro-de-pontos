@@ -6,7 +6,7 @@ require_once __DIR__.'/app/entity/db/config.php';
 
     $id_registro = $_SESSION["id"];
 
-    $sqlHistorico = "SELECT data_ponto, tipo_ponto FROM registro WHERE id_usuario = '{$id_registro}'";
+    $sqlHistorico = "SELECT data_ponto, tipo_ponto FROM registro WHERE id_usuario = '{$id_registro}' ORDER BY id DESC";
 
     $res = $conn->query($sqlHistorico);
 

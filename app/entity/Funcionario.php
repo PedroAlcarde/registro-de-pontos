@@ -42,7 +42,7 @@ public function excluir(){
     return (new Database('usuario'))->delete('id = '.$this->id);
 }
 
-public static function getFuncionarios($where = null, $order = null, $limit = null){
+public static function getFuncionarios($where = null, $order = 'id DESC', $limit = null){
 return (new Database('usuario'))->select($where,$order,$limit)
                                 ->fetchAll(PDO::FETCH_CLASS,self::class);
 }

@@ -29,7 +29,7 @@ return true;
 }
 
 
-public static function getPontos($where = null, $order = null, $limit = null){
+public static function getPontos($where = null, $order = 'id DESC', $limit = null){
 return (new Database('registro'))->select($where,$order,$limit)
                                 ->fetchAll(PDO::FETCH_CLASS,self::class);
 }

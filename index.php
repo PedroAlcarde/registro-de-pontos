@@ -60,7 +60,7 @@
                                 </div>
                                 <div>
                                     <div class="mb-3 entrar">
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                        <button type="submit" class="btn btn-primary">Entrar</button>
                                     </div>
                                 </div>
                             </form>
