@@ -2,17 +2,7 @@
 
     date_default_timezone_set('America/Sao_Paulo');
 
-    $mensagem = '';
-    if(isset($_GET['status'])){
-        switch ($_GET['status']){
-            case 'success':
-                $mensagem = '<div class="alert alert-success mt-2">Ação executada com sucesso!</div>';
-                break;
-            case 'error':
-                $mensagem = '<div class="alert alert-danger mt-2">Ação não executada!</div>';
-                break;
-        }
-    }
+    
 
     $lista_nomes = [];
     foreach ($funcionarios as $usuario) {
@@ -39,11 +29,13 @@
 
 <main class="mt-">
 
-    <?= $mensagem ?>
+
 
     <section class="rounded-3">
 
-        <table style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" class="table table-hover my-5 rounded-3">
+    <h2 style="margin-top: 60px;">Registros feitos hoje</h2>
+
+        <table style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" class="table table-hover my-3 rounded-3">
 
             <thead>
                 <tr>

@@ -28,9 +28,9 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
     <form action="gerar_pdf.php" method="POST">
 
     <div class="form-group">
-            <label for="id_usuario">Funcionário</label>
+            <label for="id_usuario"><strong>Selecione um funcionário</strong></label>
             <select name="id_usuario" id="id_usuario" class="form-control" required>
-                <option value="" disabled selected>Selecione um funcionário</option>
+                <option value="" disabled selected>Funcionário</option>
                 <?php 
 
                     foreach($funcionarios as $funcionario){
@@ -40,6 +40,10 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
                     }
                 ?>
             </select>
+            <label for="data_inicio" class=" mt-4"><strong>Início do período desejado</strong></label>
+            <input type="date" name="data_inicio" class="form-control mb-4" required>
+            <label for="data_fim"><strong>Final do período desejado</strong></label>
+            <input type="date" name="data_fim" class="form-control" required>
         </div>
 
     <button type="submit" name="acao" value="relatorio" class="btn btn-primary mt-3">

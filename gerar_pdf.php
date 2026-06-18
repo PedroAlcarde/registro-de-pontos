@@ -17,14 +17,37 @@ $imageData = base64_encode(file_get_contents($path));
 
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])){
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario']) && isset($_POST['data_inicio']) && isset($_POST['data_fim'])){
     $id = intval($_POST['id_usuario']);
     $option = $_POST['acao'];
+    $inicio = $_POST['data_inicio'] . ' 00:00:00';
+    $fim = $_POST['data_fim'] . ' 23:59:59';
 
     $sql_func = $conn->query("SELECT * FROM usuario WHERE id = ".$id);
     $funcionario = $sql_func->fetch_assoc();
 
-    $sql_regs = $conn->query("SELECT * FROM registro WHERE id_usuario = ".$id);
+    $sql_regs = $conn->query("SELECT * FROM registro WHERE id_usuario = ".$id." AND data_ponto BETWEEN '".$inicio."' AND '".$fim."' ORDER BY data_ponto ASC");
+
+    $total_segundos = 0;
+    $entrada_time = null;
+
+    while($ponto = $sql_regs->fetch_assoc()){
+        if($ponto['tipo_ponto'] == 'entrada'){
+            $entrada_time = strtotime($ponto['data_ponto']);
+        }elseif ($ponto['tipo_ponto'] == 'saida' && $entrada_time !== null) {
+            $saida_time = strtotime($ponto['data_ponto']);
+            $total_segundos += ($saida_time - $entrada_time);
+
+            $entrada_time = null;
+        }
+    }
+
+    $horas = floor($total_segundos / 3600);
+    $minutos = floor(($total_segundos % 3600) / 60);
+
+    $total_format = $horas."H e ".$minutos."M";
+
+    $sql_regs->data_seek(0); 
 
 if($option === 'pdf'){
         $html = "
@@ -80,11 +103,15 @@ if($option === 'pdf'){
         $html .= "<h3>Nome: {$funcionario['nome']}</h3>";
         $html .= "<h3>Registros:</h3>";
         $html .= "<table>";
-        $html .= "<tr><th class='borda-pdf'>Data</th><th class='borda-pdf'>Tipo</th></tr>";
+        $html .= "<tr class='borda-pdf' style='background-color:#bebebe;'><th>Horas trabalhadas</th></tr>";
+        $html .= "<tr><td class='borda-pdf'>$total_format</td></tr>";
+        $html .= "</table>";
+        $html .= "<table>";
+        $html .= "<tr><th class='borda-pdf' style='background-color:#bebebe;'>Data</th><th class='borda-pdf' style='background-color:#bebebe;'>Tipo</th></tr>";
 
         while ($reg = $sql_regs->fetch_assoc()){
             $html .= "<tr>";
-            $html .= "<td class='borda-pdf'>{$reg['data_ponto']}</td>";
+            $html .= "<td class='borda-pdf'>".date('d/m/Y H:i:s', strtotime($reg['data_ponto']))."</td>";
             $html .= "<td class='borda-pdf'>{$reg['tipo_ponto']}</td>";
             $html .= "</tr>";
         }
@@ -125,6 +152,7 @@ if($option === 'pdf'){
                 }
                 th, td{
                     border:none;
+                    text-align: center;
                 }
 
                 .borda-pdf{
@@ -163,13 +191,17 @@ if($option === 'pdf'){
     ";
         
         $html .= "<h3>Nome: {$funcionario['nome']}</h3>";
-        $html .= "<h3>Registros:</h3>";
+        $html .= "<h3>Registros entre ".date('d/m/Y', strtotime($inicio))." e ".date('d/m/Y', strtotime($fim)).":</h3>";
+         $html .= "<table>";
+        $html .= "<tr class='borda-pdf' style='background-color:#bebebe;'><th>Horas trabalhadas</th></tr>";
+        $html .= "<tr><td class='borda-pdf'>$total_format</td></tr>";
+        $html .= "</table>";
         $html .= "<table>";
-        $html .= "<tr><th class='borda-pdf'>Data</th><th class='borda-pdf'>Tipo</th></tr>";
+        $html .= "<tr><th class='borda-pdf'  style='background-color:#bebebe;'>Data</th><th class='borda-pdf'  style='background-color:#bebebe;'>Tipo</th></tr>";
 
         while ($reg = $sql_regs->fetch_assoc()){
             $html .= "<tr>";
-            $html .= "<td class='borda-pdf'>{$reg['data_ponto']}</td>";
+            $html .= "<td class='borda-pdf'>".date('d/m/Y H:i:s', strtotime($reg['data_ponto']))."</td>";
             $html .= "<td class='borda-pdf'>{$reg['tipo_ponto']}</td>";
             $html .= "</tr>";
         }

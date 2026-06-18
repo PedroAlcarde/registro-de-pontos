@@ -32,6 +32,7 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         $id_usuario = $_SESSION["id"];
         $data_ponto = date('Y-m-d H:i:s');
+        $data_hoje = date('Y-m-d');
 
         $select = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' ORDER BY id DESC LIMIT 1";
 
@@ -41,8 +42,16 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         $qtd = $res->num_rows;
 
+        $select_day = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' AND DATE (data_ponto) = CURDATE()";
+
+        $res_day = $conn->query($select_day) or die($conn->error);
+
+        $row_day = $res_day->fetch_object();
+
+        
 
 
+        
         if($qtd>0){
             if($row->tipo_ponto === 'entrada'){
                 $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'saida')";
