@@ -37,7 +37,7 @@
 
     <section>
         <a href="cadastrar.php">
-            <button class="btn text-dark bg-info btn-lg">Cadastrar funcionário</button>
+            <button class="btn text-dark btn-lg" style="background-color: orange;">Cadastrar funcionário</button>
         </a>
     </section>
 

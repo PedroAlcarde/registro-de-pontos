@@ -15,5 +15,5 @@ $mensagem = '';
 ?>
     <?= $mensagem ?>
 <div>
-    <a href="ponto-manual.php"><button class="btn text-dark bg-info btn-lg">Registrar ponto manualmente</button></a>
+    <a href="ponto-manual.php"><button class="btn text-dark btn-lg" style="background-color: orange;">Registrar ponto manualmente</button></a>
 </div>
