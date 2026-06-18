@@ -49,13 +49,13 @@
                                 <div>
                                     <div class="mb-3">
                                         <label>Matrícula</label>
-                                        <input type="text" name="matricula" class="form-control">
+                                        <input type="text" name="matricula" class="form-control" required>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="mb-3">
                                         <label>Senha</label>
-                                        <input type="password" name="senha" class="form-control">
+                                        <input type="password" name="senha" class="form-control" required>
                                     </div>
                                 </div>
                                 <div>
