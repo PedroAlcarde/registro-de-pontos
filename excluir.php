@@ -30,6 +30,6 @@ if(isset($_POST['excluir'])){
 
 }
 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/confirmar-exclusao.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/confirmar-exclusao.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';
