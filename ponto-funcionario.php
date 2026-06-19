@@ -3,10 +3,14 @@ date_default_timezone_set('America/Sao_Paulo');
 
 session_start();
 require_once __DIR__.'/app/entity/db/config.php';
+    $result_dia = '';
+
+    $saida_time = '';
+    $entrada_time = '';
 
     $id_registro = $_SESSION["id"];
 
-    $sqlHistorico = "SELECT data_ponto, tipo_ponto FROM registro WHERE id_usuario = '{$id_registro}' ORDER BY id DESC";
+    $sqlHistorico = "SELECT data_ponto, tipo_ponto FROM registro WHERE id_usuario = '{$id_registro}' ORDER BY id DESC LIMIT 20";
 
     $res = $conn->query($sqlHistorico);
 
@@ -28,6 +32,29 @@ require_once __DIR__.'/app/entity/db/config.php';
                                                         <td colspan="6" class="text-center">Nenhum registro encontrado</td>';
 
 
+    
+        $select_day = "SELECT * FROM registro WHERE id_usuario = '{$id_registro}' AND DATE (data_ponto) = CURDATE() LIMIT 2";
+
+        $res_day = $conn->query($select_day) or die($conn->error);
+
+        while($row_day = $res_day->fetch_assoc()){
+            if($row_day['tipo_ponto'] == 'entrada'){
+                $entrada_time = new DateTime($row_day['data_ponto']);
+            }elseif ($row_day['tipo_ponto'] == 'saida') {
+                $saida_time = new DateTime($row_day['data_ponto']);
+            }
+        }
+
+        if(!$entrada_time == null && !$saida_time == null){
+
+        $intervalo = $entrada_time->diff($saida_time);
+
+        $result_dia = "<div>
+                        <h1>Tempo trabalhado: ".$intervalo->h. "h ".$intervalo->i."m ".$intervalo->s."s.</h1>
+                    </div>";
+}
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
         $id_usuario = $_SESSION["id"];
@@ -42,16 +69,9 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         $qtd = $res->num_rows;
 
-        $select_day = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' AND DATE (data_ponto) = CURDATE()";
-
-        $res_day = $conn->query($select_day) or die($conn->error);
-
-        $row_day = $res_day->fetch_object();
-
         
 
-
-        
+    
         if($qtd>0){
             if($row->tipo_ponto === 'entrada'){
                 $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'saida')";
@@ -64,12 +84,6 @@ require_once __DIR__.'/app/entity/db/config.php';
             $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
             $conn->query($sql);
         }
-
-
-
-        session_destroy();
-        header('Location: login.php');
-        exit;
 
 
 }
@@ -137,15 +151,16 @@ require_once __DIR__.'/app/entity/db/config.php';
     </div>
     <div class="container funcionario">
         <?php 
-        
-            
 
             echo "<h1>Bem vindo, ". $_SESSION["nome"]."!</h1>";
+
         
         ?>
         <form method="post">
-            <input type="submit" style="background-color: orange; color:black;" class="button-ponto btn" name="bater_ponto" value="Registrar ponto">
+            <input type="submit" style="background-color: orange; color:black;" class="button-ponto btn" name="bater_ponto" value="Registrar ponto" <?php if(isset($row) && $row !== null && $row->tipo_ponto === 'saida'){echo 'onclick="iniciarCronometro()"';}?> >
         </form>
+
+        <?= $result_dia ?>
 
         <div>
             <h5 style="text-align: center; margin-top: 20px; margin-bottom: 20px; color: white; padding: 10px; border-radius: 50%; width: 250px; height: 250px; align-items: center; justify-content: center; display: flex; font-size: 23px; border: white 2px solid;" class="js-data">Quarta, 17 de junho de 2026 <br>14:06:00</h5>
@@ -186,6 +201,12 @@ require_once __DIR__.'/app/entity/db/config.php';
         setInterval(() => {
             setarData();    
         }, 1000);
+
+        function iniciarCronometro(){
+            setTimeout(() => {
+                alert('Não se esqueça de finalizar o seu turno!')
+            }, 5000) 
+        }
     </script>
 </body>
 </html>

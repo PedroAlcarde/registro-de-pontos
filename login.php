@@ -23,11 +23,15 @@ if($qtd > 0){
     $_SESSION["nome"] = $row->nome;
     $_SESSION["tipo_usuario"] = $row->tipo_usuario;
     $_SESSION["id"] = $row->id;
+    $_SESSION["status"] = $row->status;
     // print "<script>location.href='dashboard.php';</script>";
     if($_SESSION["tipo_usuario"] === 'admin'){
         print "<script>location.href='dashboard.php';</script>";
-    }else{
+    }elseif($_SESSION['status'] === 's'){
         print "<script>location.href='ponto-funcionario.php';</script>";
+    }else{
+        print "<script>alert('Funcionário inativo!')</script>";
+    print "<script>location.href='index.php';</script>";
     }
 }else{
     print "<script>alert('Matrícula e/ou senha incorreta(s)')</script>";
