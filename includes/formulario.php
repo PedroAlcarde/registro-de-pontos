@@ -18,6 +18,11 @@
             <label>Nome</label>
             <input type="text" class="form-control" name="nome" id="nome" value="<?= $obFuncionario->nome ?>">
         </div>
+        
+        <div class="form-group">
+            <label>E-mail</label>
+            <input type="text" class="form-control" name="email" id="email" value="<?= $obFuncionario->email ?>">
+        </div>
 
         <div class="form-group">
             <label>Matrícula</label>

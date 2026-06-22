@@ -8,10 +8,11 @@ require_once __DIR__.'/app/entity/Funcionario.php';
 
     $obFuncionario = new Funcionario;
 
-if(isset($_POST['nome'], $_POST['matricula'], $_POST['tipo_usuario'], $_POST['status'])){
+if(isset($_POST['nome'], $_POST['email'], $_POST['matricula'], $_POST['tipo_usuario'], $_POST['status'])){
 
 
     $obFuncionario->nome = $_POST['nome'];
+    $obFuncionario->email = $_POST['email'];
     $obFuncionario->matricula = $_POST['matricula'];
     $obFuncionario->tipo_usuario = $_POST['tipo_usuario'];
     $obFuncionario->status = $_POST['status'];

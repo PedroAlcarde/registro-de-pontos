@@ -1,5 +1,12 @@
 <?php 
 date_default_timezone_set('America/Sao_Paulo');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once('src/PHPMailer.php');
+require_once('src/SMTP.php');
+require_once('src/Exception.php');
 
 session_start();
 require_once __DIR__.'/app/entity/db/config.php';
@@ -33,15 +40,18 @@ require_once __DIR__.'/app/entity/db/config.php';
 
 
     
-        $select_day = "SELECT * FROM registro WHERE id_usuario = '{$id_registro}' AND DATE (data_ponto) = CURDATE() LIMIT 2";
-
+        $select_day = "SELECT * FROM registro WHERE id_usuario = '{$id_registro}' AND DATE (data_ponto) = CURDATE() ORDER BY id DESC LIMIT 2";
+        $mostrar_tempo = false;
         $res_day = $conn->query($select_day) or die($conn->error);
+        $result = $res_day->fetch_all();
+if(count($result)>0){
+ if($result[0][3]=='saida'){
 
-        while($row_day = $res_day->fetch_assoc()){
-            if($row_day['tipo_ponto'] == 'entrada'){
-                $entrada_time = new DateTime($row_day['data_ponto']);
-            }elseif ($row_day['tipo_ponto'] == 'saida') {
-                $saida_time = new DateTime($row_day['data_ponto']);
+        foreach($result as $result_day){
+            if($result_day[3] == 'entrada'){
+                $entrada_time = new DateTime($result_day[2]);
+            }elseif ($result_day[3] == 'saida') {
+                $saida_time = new DateTime($result_day[2]);
             }
         }
 
@@ -51,12 +61,27 @@ require_once __DIR__.'/app/entity/db/config.php';
 
         $result_dia = "<div>
                         <h1>Tempo trabalhado: ".$intervalo->h. "h ".$intervalo->i."m ".$intervalo->s."s.</h1>
+                    </div>";    
+        }
+      
+    }else{
+        $result_dia= "<div>
+                        <h1>Em jornada de trabalho...</h1>
+                    </div>";
+    }
+}else{
+    $result_dia= "<div>
+                        <h1>Iniciar jornada de trabalho</h1>
                     </div>";
 }
+   
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
+        $phpmailer = new PHPMailer(true);
+
+        $email_usuario = $_SESSION["email"];
         $id_usuario = $_SESSION["id"];
         $data_ponto = date('Y-m-d H:i:s');
         $data_hoje = date('Y-m-d');
@@ -68,9 +93,6 @@ require_once __DIR__.'/app/entity/db/config.php';
         $row = $res->fetch_object();
 
         $qtd = $res->num_rows;
-
-        
-
     
         if($qtd>0){
             if($row->tipo_ponto === 'entrada'){
@@ -84,6 +106,36 @@ require_once __DIR__.'/app/entity/db/config.php';
             $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
             $conn->query($sql);
         }
+
+        
+
+       try {
+
+    $phpmailer = new PHPMailer(true);
+
+    $phpmailer->isSMTP();
+    $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+    $phpmailer->SMTPAuth = true;
+    $phpmailer->Port = 2525;
+    $phpmailer->Username = '40acd6649702f1';
+    $phpmailer->Password = '188d017f2b22d5';
+    $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+    $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
+    $phpmailer->addAddress($email_usuario);
+
+    $phpmailer->isHTML(true);
+    $phpmailer->Subject = 'Registro de ponto';
+    $phpmailer->Body = "Seu ponto foi registrado em {$data_ponto}";
+    $phpmailer->AltBody = "Seu ponto foi registrado em {$data_ponto}";
+
+    $phpmailer->send();
+
+} catch (Exception $e) {
+    error_log($phpmailer->ErrorInfo);
+}
+
+        header('Location: ponto-funcionario.php');
 
 
 }

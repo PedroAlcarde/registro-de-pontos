@@ -21,6 +21,7 @@ $qtd = $res->num_rows;
 
 if($qtd > 0){
     $_SESSION["nome"] = $row->nome;
+    $_SESSION["email"] = $row->email;
     $_SESSION["tipo_usuario"] = $row->tipo_usuario;
     $_SESSION["id"] = $row->id;
     $_SESSION["status"] = $row->status;

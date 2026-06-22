@@ -1,15 +1,17 @@
 <?php 
 
+
+
 namespace App\Entity;
 
 use App\db\Database;
 use \PDO;
 require_once __DIR__.'/db/Database.php';
-
 class Funcionario{
 
 public $id;
 public $nome;
+public $email;
 public $matricula;
 public $tipo_usuario;
 public $status;
@@ -19,6 +21,7 @@ public function cadastrar(){
 $obDatabase = new Database('usuario');
 $this->id = $obDatabase->insert([
             'nome' => $this->nome,
+            'email' => $this->email,
             'matricula' => $this->matricula,
             'tipo_usuario' => $this->tipo_usuario,
             'status' => $this->status,
@@ -32,6 +35,7 @@ public function atualizar(){
 
     return (new Database('usuario'))->update('id = '.$this->id,[
             'nome' => $this->nome,
+            'email' => $this->email,
             'matricula' => $this->matricula,
             'tipo_usuario' => $this->tipo_usuario,
             'status' => $this->status,
@@ -52,4 +56,7 @@ public static function getFuncionario($id){
                                     ->fetchObject(self::class); 
 }
 
+public static function enviarEmail(){
+    
+}
 }
