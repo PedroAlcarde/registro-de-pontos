@@ -137,6 +137,9 @@ if(count($result)>0){
 
         header('Location: ponto-funcionario.php');
 
+        // nao funcionando!!!
+        print "<script>alert('E-mail de confirmação enviado!');</script>";
+
 
 }
 ?>
