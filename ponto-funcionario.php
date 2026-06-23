@@ -1,3 +1,4 @@
+
 <?php 
 date_default_timezone_set('America/Sao_Paulo');
 use PHPMailer\PHPMailer\PHPMailer;
@@ -88,6 +89,11 @@ if(count($result)>0){
         $id_usuario = $_SESSION["id"];
         $data_ponto = date('Y-m-d H:i:s');
         $data_hoje = date('Y-m-d');
+        $latitude = $_SESSION["latitudephp"];
+        $longitude = $_SESSION["longitudephp"];
+        // var_dump($_SESSION['latitude']);
+        // exit;
+    
 
         $select = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' ORDER BY id DESC LIMIT 1";
 
@@ -99,14 +105,14 @@ if(count($result)>0){
     
         if($qtd>0){
             if($row->tipo_ponto === 'entrada'){
-                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'saida')";
+                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'saida', '".$latitude."', '".$longitude."')";
                 $conn->query($sql);
             }elseif($row->tipo_ponto === 'saida'){
-                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
+                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
                 $conn->query($sql);
             }
         }else{
-            $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto) VALUES('".$id_usuario."','".$data_ponto."', 'entrada')";
+            $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
             $conn->query($sql);
         }
 
@@ -248,6 +254,34 @@ if(count($result)>0){
         </table>
     </div>
 
-    
+    <script>
+
+            if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                console.log("Latitude:", position.coords.latitude);
+                console.log("Longitude:", position.coords.longitude);
+                console.log("Precisão (metros):", position.coords.accuracy);
+                sessionStorage.setItem('latitude', position.coords.latitude);
+                sessionStorage.setItem('longitude', position.coords.longitude);
+                fetch('salvar-localizacao.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'lat=' + position.coords.latitude + '&lon=' + position.coords.longitude
+                })
+                .then(response => response.text())
+                .then(data => console.log(data));
+                },
+                (error) => {
+                console.error("Erro ao obter localização:", error.message);
+                }
+            );
+            } else {
+            console.log("Geolocalização não suportada neste navegador.");
+            }
+
+    </script>
 </body>
 </html>
