@@ -11,7 +11,7 @@ require_once('src/Exception.php');
 session_start();
 require_once __DIR__.'/app/entity/db/config.php';
     $result_dia = '';
-
+    $ponto_email = '';
     $saida_time = '';
     $entrada_time = '';
 
@@ -47,6 +47,7 @@ require_once __DIR__.'/app/entity/db/config.php';
 if(count($result)>0){
  if($result[0][3]=='saida'){
 
+        $ponto_email = 'entrada';
         foreach($result as $result_day){
             if($result_day[3] == 'entrada'){
                 $entrada_time = new DateTime($result_day[2]);
@@ -68,6 +69,8 @@ if(count($result)>0){
         $result_dia= "<div>
                         <h1>Em jornada de trabalho...</h1>
                     </div>";
+        $ponto_email = 'saída';
+        
     }
 }else{
     $result_dia= "<div>
@@ -113,6 +116,7 @@ if(count($result)>0){
 
     $phpmailer = new PHPMailer(true);
 
+    $phpmailer->CharSet = 'UTF-8'; 
     $phpmailer->isSMTP();
     $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
     $phpmailer->SMTPAuth = true;
@@ -124,10 +128,19 @@ if(count($result)>0){
     $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
     $phpmailer->addAddress($email_usuario);
 
+    $html_conteudo = file_get_contents('email.html');
+
+    $nome_funcionario = $_SESSION['nome'];
+    $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
+    $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
+    $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
+    
+    $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
+
     $phpmailer->isHTML(true);
     $phpmailer->Subject = 'Registro de ponto';
-    $phpmailer->Body = "Seu ponto foi registrado em {$data_ponto}";
-    $phpmailer->AltBody = "Seu ponto foi registrado em {$data_ponto}";
+    $phpmailer->Body = $html_conteudo;
+    $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
 
     $phpmailer->send();
 
@@ -137,8 +150,7 @@ if(count($result)>0){
 
         header('Location: ponto-funcionario.php');
 
-        // nao funcionando!!!
-        print "<script>alert('E-mail de confirmação!');</script>";
+        echo "<script>alert('E-mail de confirmação!');</script>";
 
 
 }
@@ -212,7 +224,7 @@ if(count($result)>0){
         
         ?>
         <form method="post">
-            <input type="submit" style="background-color: orange; color:black;" class="button-ponto btn" name="bater_ponto" value="Registrar ponto" <?php if(isset($row) && $row !== null && $row->tipo_ponto === 'saida'){echo 'onclick="iniciarCronometro()"';}?> >
+            <input type="submit" style="background-color: orange; color:black;" class="button-ponto btn" name="bater_ponto" value="Registrar ponto" <?php if(isset($row) && $row !== null && $row->tipo_ponto === 'saida')?> >
         </form>
 
         <?= $result_dia ?>
@@ -236,32 +248,6 @@ if(count($result)>0){
         </table>
     </div>
 
-    <script>
-        function setarData(){
-            let elementoData = document.querySelector(".js-data");
-
-            let data = new Date();
-
-            const objData = {
-                year: 'numeric',
-                month: 'long',
-                weekday: 'long',
-                day: 'numeric',
-        };
-
-        elementoData.textContent = data.toLocaleTimeString("pt-BR", objData);
-        }
-
-        setarData();
-        setInterval(() => {
-            setarData();    
-        }, 1000);
-
-        function iniciarCronometro(){
-            setTimeout(() => {
-                alert('Não se esqueça de finalizar o seu turno!')
-            }, 5000) 
-        }
-    </script>
+    
 </body>
 </html>

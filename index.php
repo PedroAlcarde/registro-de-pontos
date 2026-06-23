@@ -6,6 +6,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Login</title>
     <style>
+        *{
+            text-align: center;
+        }
 
         .login{
             width: 100%;
@@ -30,14 +33,21 @@
             flex-flow: row nowrap;
             justify-content: center;
         }
+
+        .bemvindo{
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body class="bg-light">
     <div  class="logo-index">
         <img src="images/intime.png" alt="intime">
     </div>
+    <div class="bemvindo"><h1>Seja bem vindo!</h1></div>
     <div class="login">
         <div class="container">
+            
             <div class="row">
                 <div class="col-lg-4 offset-lg-4">
                     <div class="card">
