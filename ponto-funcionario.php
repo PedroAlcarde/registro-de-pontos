@@ -103,9 +103,9 @@ if(count($result)>0){
             return $raioTerra * $c; 
         }
         //-22.060663 teste
-        $latUsuario = -21.964561; 
+        $latUsuario = $latitude; 
         //-46.976082 teste
-        $lngUsuario = -46.791603;
+        $lngUsuario = $longitude;
         $latLoja = -21.964561;
         $lngLoja = -46.791603;
 
