@@ -38,6 +38,6 @@ if(isset($_POST['nome'], $_POST['email'], $_POST['matricula'], $_POST['tipo_usua
 
 }
 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/formulario.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/formulario.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';

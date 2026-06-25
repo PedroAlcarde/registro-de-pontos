@@ -103,11 +103,12 @@ if(count($result)>0){
             return $raioTerra * $c; 
         }
         //-22.060663 teste
-        $latUsuario = $latitude; 
+        $latUsuario = -21.964561; 
         //-46.976082 teste
-        $lngUsuario = $longitude;
+        $lngUsuario = -46.791603;
         $latLoja = -21.964561;
         $lngLoja = -46.791603;
+
     
         $distancia = calcularHaversine($latUsuario, $lngUsuario, $latLoja, $lngLoja);
 
@@ -144,48 +145,48 @@ if(count($result)>0){
 
                 
 
-               try {
+            //    try {
 
-            $phpmailer = new PHPMailer(true);
+        //     $phpmailer = new PHPMailer(true);
 
-            $phpmailer->CharSet = 'UTF-8'; 
-            $phpmailer->isSMTP();
-            $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-            $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = 2525;
-            $phpmailer->Username = '40acd6649702f1';
-            $phpmailer->Password = '188d017f2b22d5';
-            $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        //     $phpmailer->CharSet = 'UTF-8'; 
+        //     $phpmailer->isSMTP();
+        //     $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+        //     $phpmailer->SMTPAuth = true;
+        //     $phpmailer->Port = 2525;
+        //     $phpmailer->Username = '40acd6649702f1';
+        //     $phpmailer->Password = '188d017f2b22d5';
+        //     $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-            $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
-            $phpmailer->addAddress($email_usuario);
+        //     $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
+        //     $phpmailer->addAddress($email_usuario);
 
-            $html_conteudo = file_get_contents('email.html');
+        //     $html_conteudo = file_get_contents('email.html');
 
-            $nome_funcionario = $_SESSION['nome'];
-            $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
-            $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
-            $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
+        //     $nome_funcionario = $_SESSION['nome'];
+        //     $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
+        //     $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
+        //     $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
             
-            $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
+        //     $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
 
-            $phpmailer->isHTML(true);
-            $phpmailer->Subject = 'Registro de ponto';
-            $phpmailer->Body = $html_conteudo;
-            $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
+        //     $phpmailer->isHTML(true);
+        //     $phpmailer->Subject = 'Registro de ponto';
+        //     $phpmailer->Body = $html_conteudo;
+        //     $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
 
-            $phpmailer->send();
+        //     $phpmailer->send();
 
-        } catch (Exception $e) {
-            error_log($phpmailer->ErrorInfo);
-        }
+        // } catch (Exception $e) {
+        //     error_log($phpmailer->ErrorInfo);
+        // }
 
                 header('Location: ponto-funcionario.php');
 
                 echo "<script>alert('E-mail de confirmação!');</script>";
 
         } else {
-            echo "<script>alert('Registro não efetuado. <br>Você não está no raio mínimo da empresa.')</script>;";
+            echo "<script>alert('Registro não efetuado. Você não está no raio mínimo da empresa.')</script>;";
         }
 
         

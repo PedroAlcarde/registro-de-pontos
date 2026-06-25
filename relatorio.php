@@ -1,5 +1,5 @@
 <?php 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
 
 
 use App\Entity\ponto;
@@ -57,7 +57,7 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
 
 
 <?php 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';
 ?>
 
 

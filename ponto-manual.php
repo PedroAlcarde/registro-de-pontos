@@ -32,6 +32,6 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
 
 
 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/form-manual.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/form-manual.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';

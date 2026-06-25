@@ -14,8 +14,8 @@ require_once __DIR__.'/app/entity/db/config.php';
 $funcionarios = Funcionario::getFuncionarios();
 $pontos = Ponto::getPontos($where = 'DATE (data_ponto) = CURDATE()', $order = 'id DESC', $limit = null);
 
-include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/button-ponto.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/infodash.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/list-ponto.php';
-include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/button-ponto.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/infodash.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/list-ponto.php';
+include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';

@@ -132,7 +132,7 @@ if($option === 'pdf'){
     }elseif($option === 'relatorio'){
 
         
-        include 'C:/xampp/htdocs/registro-de-pontos/includes/header.php';
+        include 'D:/xampp/htdocs/registro-de-pontos/includes/header.php';
 
         ?><a href="relatorio.php">
             <button class="btn btn-danger btn-lg my-2">Voltar</button>
@@ -211,7 +211,7 @@ if($option === 'pdf'){
         echo $html;
 
         
-        include 'C:/xampp/htdocs/registro-de-pontos/includes/footer.php';
+        include 'D:/xampp/htdocs/registro-de-pontos/includes/footer.php';
         
     }
 }
