@@ -80,86 +80,116 @@ if(count($result)>0){
 }
    
 
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bater_ponto'])){
 
-        $phpmailer = new PHPMailer(true);
-
-        $email_usuario = $_SESSION["email"];
-        $id_usuario = $_SESSION["id"];
-        $data_ponto = date('Y-m-d H:i:s');
-        $data_hoje = date('Y-m-d');
         $latitude = $_SESSION["latitudephp"];
         $longitude = $_SESSION["longitudephp"];
-        // var_dump($_SESSION['latitude']);
-        // exit;
+
+        function calcularHaversine($lat1, $lon1, $lat2, $lon2) {
+            $raioTerra = 6371; 
     
-
-        $select = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' ORDER BY id DESC LIMIT 1";
-
-        $res = $conn->query($select) or die($conn->error);
-
-        $row = $res->fetch_object();
-
-        $qtd = $res->num_rows;
+            $dLat = deg2rad($lat2 - $lat1);
+            $dLon = deg2rad($lon2 - $lon1);
+            
+            //curvatura
+            $a = sin($dLat / 2) * sin($dLat / 2) +
+                cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+                sin($dLon / 2) * sin($dLon / 2);
+            
+            //angulo
+            $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
     
-        if($qtd>0){
-            if($row->tipo_ponto === 'entrada'){
-                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'saida', '".$latitude."', '".$longitude."')";
-                $conn->query($sql);
-            }elseif($row->tipo_ponto === 'saida'){
-                $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
-                $conn->query($sql);
-            }
-        }else{
-            $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
-            $conn->query($sql);
+            //km
+            return $raioTerra * $c; 
+        }
+    
+        $latUsuario = $latitude; 
+        $lngUsuario = $longitude;
+        $latLoja = -21.9712;
+        $lngLoja = -46.7947;
+    
+        $distancia = calcularHaversine($latUsuario, $lngUsuario, $latLoja, $lngLoja);
+    
+        if ($distancia <= 5) {
+                $phpmailer = new PHPMailer(true);
+
+                $email_usuario = $_SESSION["email"];
+                $id_usuario = $_SESSION["id"];
+                $data_ponto = date('Y-m-d H:i:s');
+                $data_hoje = date('Y-m-d');
+            
+
+                $select = "SELECT * FROM registro WHERE id_usuario = '{$id_usuario}' ORDER BY id DESC LIMIT 1";
+
+                $res = $conn->query($select) or die($conn->error);
+
+                $row = $res->fetch_object();
+
+                $qtd = $res->num_rows;
+            
+                if($qtd>0){
+                    if($row->tipo_ponto === 'entrada'){
+                        $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'saida', '".$latitude."', '".$longitude."')";
+                        $conn->query($sql);
+                    }elseif($row->tipo_ponto === 'saida'){
+                        $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
+                        $conn->query($sql);
+                    }
+                }else{
+                    $sql = "INSERT INTO registro (id_usuario, data_ponto, tipo_ponto, latitude, longitude) VALUES('".$id_usuario."','".$data_ponto."', 'entrada', '".$latitude."', '".$longitude."')";
+                    $conn->query($sql);
+                }
+
+                
+
+               try {
+
+            $phpmailer = new PHPMailer(true);
+
+            $phpmailer->CharSet = 'UTF-8'; 
+            $phpmailer->isSMTP();
+            $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+            $phpmailer->SMTPAuth = true;
+            $phpmailer->Port = 2525;
+            $phpmailer->Username = '40acd6649702f1';
+            $phpmailer->Password = '188d017f2b22d5';
+            $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+            $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
+            $phpmailer->addAddress($email_usuario);
+
+            $html_conteudo = file_get_contents('email.html');
+
+            $nome_funcionario = $_SESSION['nome'];
+            $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
+            $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
+            $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
+            
+            $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
+
+            $phpmailer->isHTML(true);
+            $phpmailer->Subject = 'Registro de ponto';
+            $phpmailer->Body = $html_conteudo;
+            $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
+
+            $phpmailer->send();
+
+        } catch (Exception $e) {
+            error_log($phpmailer->ErrorInfo);
+        }
+
+                header('Location: ponto-funcionario.php');
+
+                echo "<script>alert('E-mail de confirmação!');</script>";
+
+        } else {
+            echo "<script>alert('Registro não efetuado. <br>Você não está no raio mínimo da empresa.')</script>;";
         }
 
         
 
-//        try {
-
-//     $phpmailer = new PHPMailer(true);
-
-//     $phpmailer->CharSet = 'UTF-8'; 
-//     $phpmailer->isSMTP();
-//     $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-//     $phpmailer->SMTPAuth = true;
-//     $phpmailer->Port = 2525;
-//     $phpmailer->Username = '40acd6649702f1';
-//     $phpmailer->Password = '188d017f2b22d5';
-//     $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-
-//     $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
-//     $phpmailer->addAddress($email_usuario);
-
-//     $html_conteudo = file_get_contents('email.html');
-
-//     $nome_funcionario = $_SESSION['nome'];
-//     $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
-//     $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
-//     $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
-    
-//     $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
-
-//     $phpmailer->isHTML(true);
-//     $phpmailer->Subject = 'Registro de ponto';
-//     $phpmailer->Body = $html_conteudo;
-//     $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
-
-//     $phpmailer->send();
-
-// } catch (Exception $e) {
-//     error_log($phpmailer->ErrorInfo);
-// }
-
-//         header('Location: ponto-funcionario.php');
-
-//         echo "<script>alert('E-mail de confirmação!');</script>";
-
-
 }
+
 ?>
 
 <!DOCTYPE html>

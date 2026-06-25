@@ -196,7 +196,7 @@ if($option === 'pdf'){
         $html .= "<tr class='borda-pdf' style='background-color:#bebebe;'><th>Horas trabalhadas</th></tr>";
         $html .= "<tr><td class='borda-pdf'>$total_format</td></tr>";
         $html .= "</table>";
-        $html .= "<table>";
+        $html .= '<table style="margin-bottom: 100px;">';
         $html .= "<tr><th class='borda-pdf'  style='background-color:#bebebe;'>Data</th><th class='borda-pdf'  style='background-color:#bebebe;'>Tipo</th></tr>";
 
         while ($reg = $sql_regs->fetch_assoc()){
