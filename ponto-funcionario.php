@@ -118,45 +118,45 @@ if(count($result)>0){
 
         
 
-       try {
+//        try {
 
-    $phpmailer = new PHPMailer(true);
+//     $phpmailer = new PHPMailer(true);
 
-    $phpmailer->CharSet = 'UTF-8'; 
-    $phpmailer->isSMTP();
-    $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-    $phpmailer->SMTPAuth = true;
-    $phpmailer->Port = 2525;
-    $phpmailer->Username = '40acd6649702f1';
-    $phpmailer->Password = '188d017f2b22d5';
-    $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//     $phpmailer->CharSet = 'UTF-8'; 
+//     $phpmailer->isSMTP();
+//     $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+//     $phpmailer->SMTPAuth = true;
+//     $phpmailer->Port = 2525;
+//     $phpmailer->Username = '40acd6649702f1';
+//     $phpmailer->Password = '188d017f2b22d5';
+//     $phpmailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-    $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
-    $phpmailer->addAddress($email_usuario);
+//     $phpmailer->setFrom('sistema@empresa.com', 'Sistema de Ponto');
+//     $phpmailer->addAddress($email_usuario);
 
-    $html_conteudo = file_get_contents('email.html');
+//     $html_conteudo = file_get_contents('email.html');
 
-    $nome_funcionario = $_SESSION['nome'];
-    $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
-    $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
-    $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
+//     $nome_funcionario = $_SESSION['nome'];
+//     $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
+//     $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
+//     $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
     
-    $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
+//     $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');
 
-    $phpmailer->isHTML(true);
-    $phpmailer->Subject = 'Registro de ponto';
-    $phpmailer->Body = $html_conteudo;
-    $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
+//     $phpmailer->isHTML(true);
+//     $phpmailer->Subject = 'Registro de ponto';
+//     $phpmailer->Body = $html_conteudo;
+//     $phpmailer->AltBody = "Olá, seu ponto foi registrado em {$data_ponto}";
 
-    $phpmailer->send();
+//     $phpmailer->send();
 
-} catch (Exception $e) {
-    error_log($phpmailer->ErrorInfo);
-}
+// } catch (Exception $e) {
+//     error_log($phpmailer->ErrorInfo);
+// }
 
-        header('Location: ponto-funcionario.php');
+//         header('Location: ponto-funcionario.php');
 
-        echo "<script>alert('E-mail de confirmação!');</script>";
+//         echo "<script>alert('E-mail de confirmação!');</script>";
 
 
 }
