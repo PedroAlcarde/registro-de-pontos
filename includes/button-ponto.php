@@ -14,6 +14,10 @@ $mensagem = '';
 
 ?>
     <?= $mensagem ?>
-<div>
-    <a href="ponto-manual.php"><button class="btn btn-primary btn-lg">Registrar ponto manualmente</button></a>
-</div>
+    <div id="aviso-tela">
+        <p>Este dispositivo não é permitido para administradores. Acesse por um computador.</p>
+    </div>
+<div id="principal">
+    <div>
+        <a href="ponto-manual.php"><button class="btn btn-primary btn-lg">Registrar ponto manualmente</button></a>
+    </div>

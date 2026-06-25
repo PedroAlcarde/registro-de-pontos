@@ -27,6 +27,28 @@
         transition: 0.2s;
         border-radius: 5px;
       }
+      /* CSS */
+#aviso-tela {
+  display: none; /* Esconde o aviso por padrão */
+}
+
+/* Esconde o site e mostra o aviso se a largura for menor que a altura (retrato) */
+@media (max-aspect-ratio: 1/1) {
+  #principal {
+    display: none;
+  }
+  
+  #aviso-tela {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-family: sans-serif;
+  }
+}
     </style>
   </head>
   <body class="bg-light">
