@@ -106,12 +106,13 @@ if(count($result)>0){
         $latUsuario = $latitude; 
         //-46.976082 teste
         $lngUsuario = $longitude;
-        $latLoja = -21.9712;
-        $lngLoja = -46.7947;
+        $latLoja = -21.964561;
+        $lngLoja = -46.791603;
     
         $distancia = calcularHaversine($latUsuario, $lngUsuario, $latLoja, $lngLoja);
+
     
-        if ($distancia <= 1) {
+        if ($distancia <= 0.2) {
                 $phpmailer = new PHPMailer(true);
 
                 $email_usuario = $_SESSION["email"];
