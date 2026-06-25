@@ -10,7 +10,7 @@ class Database{
     const HOST = 'localhost';
     const NAME = 'registro_ponto';
     const USER = 'root';
-    const PASS = '1234';
+    const PASS = '';
 
     private $table;
     private $connection;
