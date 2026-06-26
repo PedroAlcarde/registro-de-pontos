@@ -164,7 +164,7 @@ if(count($result)>0){
 
             $nome_funcionario = $_SESSION['nome'];
             $html_conteudo = str_replace('{{nome}}', $nome_funcionario, $html_conteudo);
-            $html_conteudo = str_replace('{{tipoPonto}}', $ponto_email, $html_conteudo);
+
             $html_conteudo = str_replace('{{dataPonto}}', $data_ponto, $html_conteudo);
             
             $phpmailer->addEmbeddedImage('images/intime-sem-leg.png', 'logo_img');

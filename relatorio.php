@@ -34,6 +34,8 @@ if(isset($_POST['id_usuario'], $_POST['data_ponto'], $_POST['tipo_ponto'], $_POS
                 <?php 
 
                     foreach($funcionarios as $funcionario){
+                        // var_dump($funcionario);
+                        // exit();
                         $funcionario->id;
                         $funcionario->nome;
                         echo"<option value='".$funcionario->id."'>".$funcionario->nome."</option>";
