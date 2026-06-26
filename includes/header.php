@@ -60,7 +60,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-          <ul class=" fs-6 navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class=" fs-6 navbar-nav me-auto mb-2 mb-lg-0" id="principal">
             <li class="nav-item menu">
               <a class="text-light nav-link active fonte-navbar" aria-current="page" href="dashboard.php">Dashboard</a>
             </li>
